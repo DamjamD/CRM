@@ -9,7 +9,7 @@ module.exports = app => {
     }
 
     const save = async (req, res) => {
-        console.log('post ' + req.params)
+       
 
         const user = { ...req.body }
         if(req.params.id) user.id = req.params.id
@@ -55,7 +55,7 @@ module.exports = app => {
     }
 
     const get = (req, res) => {
-        console.log(req.params)
+       
         app.db('users')
             .select('id', 'name', 'email', 'admin', 'enable')
             .whereNull('deletedAt')

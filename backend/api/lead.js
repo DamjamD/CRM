@@ -3,6 +3,8 @@ const { existsOrError, notExistsOrError, equalsOrError } = app.api.validator
 
 
 const save = (req, res) => {
+    console.log(req.body)
+    console.log(req.body.name)
     const lead = {          
                      name: req.body.Nome,
                      email: req.body.Email,
@@ -13,7 +15,7 @@ const save = (req, res) => {
                      form_id: req.body.form_id ,
                      observacao: req.body.observacao     
     }
-
+    console.log(lead)
 
 
     if(req.params.id) 
@@ -45,7 +47,7 @@ const save = (req, res) => {
     }
     if (lead.status == 'P'){
     try {
-        existsOrError(lead.cod_andamento, 'Selecione uma situação para o evento')  
+      //  existsOrError(lead.cod_andamento, 'Selecione uma situação para o evento')  
         existsOrError(lead.cod_curso, 'Selecione um curso de interesse')   
         
         lead.data_encerrada = today
@@ -90,6 +92,7 @@ const limit = 10
 const get = async (req, res) => {
         const filter = {}
         filter.status = 'P'
+        filter.cod_responsavel =  null
         if(req.query.page){
          filter.page =  req.query.page
         }

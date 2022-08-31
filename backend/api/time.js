@@ -1,21 +1,40 @@
 module.exports = app => {
     
+    const Time = app.dbcrm.model('Time', {
+        name: String,
+        users: [],
+        enable: Boolean
+        })
     
-    getUsuario = async () =>{
-        const {Usuario}  = app.models.usuarios //app.dbcrm.usuarios.find();
 
-         Usuario.find().then(user => {
-           return user
-         })    
-
-    }
-
- 
     const get = (req, res) => {
-        Time.find().then(user => {
-            res.json(user)
-        }).catch(err => res.status(500).send(err))
+       Time.find({}).then(time => {
+        res.json(time)
+       })
+
     }
 
-   return  get
+    const save = async (req, res) => {
+    
+        if (req.params.id == null){
+    
+        time = new Time({
+            name: req.body.name,
+            users: req.body.users,
+            enable: req.body.enable
+        })
+        time.save()
+        .then(time => res.json(time).status(200))
+        .catch(err => res.status(500).send(err))
+    }else{
+        const filter =  {_id: req.params.id} 
+        const update = { users: req.body.users}
+        time = await Time.findOneAndUpdate(filter,update).then(a => res.json(a)).catch(err => res.status(500).send(err))
+       
+
+        
+    }
+}
+
+   return  {save, get}
 }

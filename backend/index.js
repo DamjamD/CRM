@@ -1,6 +1,5 @@
-
-
 const express = require ('express')
+const bodyParser = require ('body-parser')
 const consign = require('consign')
 const db = require('./config/db')
 const mongoose = require('mongoose')
@@ -11,6 +10,8 @@ require('./config/mongodb')
 
 
 const app = express()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors()) 
 app.db = db
 app.dbcrm = mongoose

@@ -5,15 +5,6 @@ module.exports = app => {
     app.post('/validateToken', app.api.auth.validateToken)
 
     app.post('/lead', app.api.lead.save)
-
-    app.route('/teste')
-        .get(app.api.leads.get)
-        .post(app.api.leads.insert) 
-    
-    app.route('/test')        
-        .post(app.api.usuarios.save) 
-        .get(app.api.usuarios.get)
-    
     
     app.route('/leads')
         .all(app.config.passport.authenticate())
@@ -48,7 +39,22 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(app.api.categories.get)
         .post(app.api.categories.save)
+        
+    app.route('/canais')
+        .all(app.config.passport.authenticate())
+        .get(app.api.canais.get)
+        .post(app.api.canais.save)
+    app.route('/times')
+    .all(app.config.passport.authenticate())
+    .get(app.api.time.get)
+    .put(app.api.time.save)
 
+    app.route('/times/:id')
+    .all(app.config.passport.authenticate())
+    .get(app.api.time.get)
+    .post(app.api.time.save)
+    .put(app.api.time.save)
+    
     app.route('/categorias/tree')
         .all(app.config.passport.authenticate())
         .get(app.api.categories.getTree)
